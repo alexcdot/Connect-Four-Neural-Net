@@ -34,8 +34,8 @@ for i, row in enumerate(preX):
             X[i,j] = 0.0
 
 encoder = LabelEncoder()
-encoder.fit(Y)
-encoded_Y = encoder.transform(Y)
+encoder.fit(preY)
+encoded_Y = encoder.transform(preY)
 dummy_y = np_utils.to_categorical(encoded_Y)
 
 # define baseline model
@@ -46,12 +46,10 @@ def baseline_model():
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
 
-estimator = KerasClassifier(build_fn=baseline_model, epochs = 10, batch_size=5,verbose=1)
+estimator = KerasClassifier(build_fn=baseline_model, epochs = 30, batch_size=5,verbose=1)
 kfold = KFold(n_splits=10, shuffle=True, random_state=seed)
 
 results = cross_val_score(estimator, X, dummy_y, cv=kfold)
 print("Baseline: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
-
-model.save('connect_four_model.h5')
 
 # accuracy of 78.6%
