@@ -32,14 +32,6 @@ for i, row in enumerate(preX):
             X[i,j] = -1.0
         if col == 'b':
             X[i,j] = 0.0
-            
-for i, row in enumerate(preY):
-    if row == 'win':
-        Y[i] = 1.0
-    if row == 'loss':
-        Y[i] = 0.0
-    if row == 'draw':
-        Y[i] = 0.5
 
 encoder = LabelEncoder()
 encoder.fit(Y)
@@ -62,4 +54,4 @@ print("Baseline: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
 
 model.save('connect_four_model.h5')
 
-# accuracy of 78%
+# accuracy of 78.6%
